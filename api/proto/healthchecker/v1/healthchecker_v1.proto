@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package healthchecker.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "go.xsfx.dev/twirp-example/api/go/healthchecker/v1";
+
+service CheckService {
+  rpc Check (CheckRequest) returns (CheckResponse);
+}
+
+message CheckRequest {
+  string deveui = 1;
+  string meter_id = 2;
+}
+
+message CheckChirpstack {
+  google.protobuf.Timestamp last_seen = 1;
+  bool enabled = 2;
+}
+message CheckDB {
+  google.protobuf.Timestamp last_valid = 1;
+  google.protobuf.Timestamp last_nonvalid = 2;
+}
+
+enum State {
+  STATE_UNSPECIFIED = 0;
+  STATE_OK = 1;
+  STATE_WARNING = 2;
+  STATE_ERROR = 3;
+}
+
+message CheckResponse {
+  CheckChirpstack chirpstack = 1;
+  CheckDB db = 2;
+  State state = 3;
+  string deveui = 4;
+  string meter_id = 5;
+}

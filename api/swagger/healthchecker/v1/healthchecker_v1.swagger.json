@@ -1,0 +1,108 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "healthchecker_v1.proto",
+    "version": "version not set"
+  },
+  "paths": {
+    "/api/healthchecker.v1.CheckService/Check": {
+      "post": {
+        "tags": [
+          "CheckService"
+        ],
+        "operationId": "Check",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/healthchecker.v1CheckRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/healthchecker.v1CheckResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "healthchecker.v1CheckChirpstack": {
+      "description": "Fields: last_seen, enabled",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "last_seen": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "healthchecker.v1CheckDB": {
+      "description": "Fields: last_valid, last_nonvalid",
+      "type": "object",
+      "properties": {
+        "last_nonvalid": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_valid": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "healthchecker.v1CheckRequest": {
+      "description": "Fields: deveui, meter_id",
+      "type": "object",
+      "properties": {
+        "deveui": {
+          "type": "string"
+        },
+        "meter_id": {
+          "type": "string"
+        }
+      }
+    },
+    "healthchecker.v1CheckResponse": {
+      "description": "Fields: chirpstack, db, state, deveui, meter_id",
+      "type": "object",
+      "properties": {
+        "chirpstack": {
+          "$ref": "#/definitions/healthcheckerv1CheckChirpstack"
+        },
+        "db": {
+          "$ref": "#/definitions/healthcheckerv1CheckDB"
+        },
+        "deveui": {
+          "type": "string"
+        },
+        "meter_id": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/healthcheckerv1State"
+        }
+      }
+    }
+  }
+}
